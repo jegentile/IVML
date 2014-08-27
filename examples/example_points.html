@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>IVML - Points</title>
+</head>
+<script type="text/javascript" src="../vendor/d3-3.4.3/d3.js"></script>
+<script type="text/javascript" src="../vendor/angular-1.2.14/angular.js"></script>
+<script type="text/javascript" src="../vendor/ui-bootstrap-tpls-0.11.0.min.js"></script>
+<script type="text/javascript" src="../dist/ivml.0.0.0.js"></script>
+
+<link href="../vendor/bootstrap.min.css" rel="stylesheet"/>
+
+<body>
+<div ng-app="ivmlexample">
+	<div class="container">
+	    <div class="page-header"><h1>Point Charts</h1></div>
+	    <div class="row" ng-controller="staticPointsCtrl">
+	        <div class="col-md-8">
+		    <plot height="300" width="600" plot-label-text="''" yaxis-label-text="'y-values'"
+			    xaxis-label-text="'x-values'" xticks="10" xmin="0" xmax="100" yticks="10" ymin="0" ymax="100">
+			<points data="ordinalData" xfunction="'/0'" yfunction="'/1'" stroke="'#FF8C00'" fill="'#FFBC8D'"
+				fill-opacity="'0.5'" radius="5"></points>
+		    </plot>
+	        </div>
+		<div class="col-md-4">
+		    <h3>Static Points Chart</h3>
+		    <p>Plot <em>points</em> onto a chart.</p>
+
+		    <p>Features explored in this example:
+
+		    <ul>
+			    <li>Add static <em>point</em> visual elements to a chart</li>
+		    </ul>
+		</div>
+	    </div>
+	    
+	    <div class="row" ng-controller="dynamicPointsCtrl">
+	        <div class="col-md-8">
+		    <plot height="300" width="600" plot-label-text="''" yaxis-label-text="'relative_frequency'"
+		    xaxis-label-text="'random_value'" xticks="10" xmin="0" xmax="100" ymin="0" ymax="0.05">
+			<points data="ordinalData" xfunction="'/0'" yfunction="percentOfRolls" stroke="'#FF8C00'" fill="'#FFBC8D'"
+				fill-opacity="'0.5'" radius="5"></points>
+		    </plot>
+	        </div>
+		<div class="col-md-4">
+		    <h3>Dynamic Points Chart</h3>
+		    <p>Plot the relative frequency of random number selection from the range [0, 100] inclusive.</p>
+
+		    <p>Features explored in this example:
+
+		    <ul>
+			    <li>Dynamic dataset auto-updates chart</li>
+			    <li>Callback method for Y value of each point</li>
+		    </ul>
+		    <input class="button" type="button" ng-click="resetDice()" value="Reset Chart"/>
+		</div>
+	    </div>
+	    
+	    <div class="row" ng-controller="slidingPointsCtrl">
+	        <div class="col-md-8">
+		    <plot height="300" width="600" plot-label-text="''" yaxis-label-text="'y-values'"
+		    xaxis-label-text="'tick_step'" xticks="10" xmin="0" xmax="100" yticks="10" ymin="0" ymax="100">
+			<points data="ordinalData" xfunction="'/0'" yfunction="'/1'" stroke="'#FF8C00'" fill="'#FFBC8D'"
+				fill-opacity="'0.5'" radius="5"></points>
+		    </plot>
+	        
+		</div>
+		<div class="col-md-4">
+		    <h3>Sliding Points Chart</h3>
+		    <p>Plot the 1-dimensional brownian motion of a constantly updating data set.</p>
+
+		    <p>Features explored in this example:
+
+		    <ul>
+			    <li>Dynamic dataset auto-updates chart</li>
+			    <li>Faux-timeseries updating</li>
+		    </ul>
+		    <input class="button" type="button" ng-click="resetDice()" value="Reset Chart"/>
+		</div>
+	    </div>
+
+
+        </div>
+</div>
+<script type="text/javascript">
+    angular.module("ivmlexample", ['ivml'])
+            .controller("staticPointsCtrl", function ($scope ) {
+		$scope.ordinalData = [
+		    [ 5,  5],
+		    [10, 10],
+		    [20, 20],
+		    [40, 40],
+		    [80, 80]
+		];
+	    })
+	    .controller("dynamicPointsCtrl", ['$scope', '$interval', function ($scope, $interval) {
+
+		$scope.ordinalData = d3.range(100).map(function (i) {return [i, 0];});
+		$scope.yValues = [0];
+		$scope.totalRolls = 0;
+		
+		function rollDice(count) {
+		    for (var i = 0; i < count; i++) {
+			var current = $scope.ordinalData[randBetween(0, 99)]; 
+			current[1] += 1; 
+			$scope.totalRolls += 1;
+		    }
+
+		    $scope.yValues = d3.range(d3.max($scope.ordinalData, function (i) { return i[1];}));
+		    $scope.yValues.reverse();
+		}
+
+                function randBetween(start, end) {
+                    return Math.round(Math.random() * (end - start)) + start;
+                }
+	
+		$scope.percentOfRolls = function (point) {
+		    if ($scope.totalRolls === 0) {
+			return 0;
+		    }
+		    else {
+			return point[1] / $scope.totalRolls;
+		    }
+		}	
+		rollDice(1);
+
+		$interval(function () {
+		    rollDice(1);
+		},
+		100);
+		
+
+		$scope.resetDice = function () {
+		    $scope.ordinalData = d3.range(100).map(function (i) {return [i, 0];});
+		    $scope.yValues = [0];
+		    $scope.totalRolls = 0;
+		}
+            }])
+	    .controller("slidingPointsCtrl", ['$scope', '$interval', function ($scope, $interval) {
+
+		$scope.ordinalData = d3.range(100).map(function (i) {return [i, 50];});
+	
+		function nextTick() {
+		    // pop off the left
+		    $scope.ordinalData.shift();
+
+		    // figure out the next random walk value
+		    var last = $scope.ordinalData[$scope.ordinalData.length - 1][1];
+
+		    var candidate = randBetween(0, 100);
+		    if (candidate < 50) {
+			last -= 1;
+		    }
+		    else {
+			last += 1;
+		    }
+
+		    // clamp to [0, 100]
+		    if (last> 100) {
+			last= 100;
+		    }
+
+		    if (last< 0) {
+			last= 0;
+		    }			
+
+		    // add the point
+		    $scope.ordinalData.push([100, last]);
+
+		    // renumber for sanity
+		    for (var i = 0; i < 100; i++) {
+			$scope.ordinalData[i][0] = i;
+		    }
+
+		}
+
+                function randBetween(start, end) {
+                    return Math.round(Math.random() * (end - start)) + start;
+                }
+
+		$interval(function () {
+		    nextTick();
+		},
+		100);
+            }]);
+</script>
+</body>
+</html>

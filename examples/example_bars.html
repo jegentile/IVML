@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>IVML - Bar Chart</title>
+</head>
+<script type="text/javascript" src="../vendor/d3-3.4.3/d3.js"></script>
+<script type="text/javascript" src="../vendor/angular-1.2.14/angular.js"></script>
+<script type="text/javascript" src="../vendor/ui-bootstrap-tpls-0.11.0.min.js"></script>
+<script type="text/javascript" src="../dist/ivml.0.0.0.js"></script>
+
+<link href="../vendor/bootstrap.min.css" rel="stylesheet"/>
+
+
+<body>
+<div ng-app="ivmlexample">
+
+    <div ng-controller="BarCtrl">
+        <div class="container">
+            <div class="page-header"><h1>IVML Bar-Group and Bar Examples </h1></div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <plot height="300" width="600"
+                          yaxis-label-text="'y-values'"
+                          xaxis-label-text="'x-values'" xticks="10" xmin="-200" xmax="200" ymin="0" ymax="100"
+                          yodomain="ordinals">
+                        <bar-group type="'stacked'" arrangement="'horizontal'">
+                            <bars data="ordinalSetA" position-function="'/0'" value-function="'/1'"
+                                  fill="'steelblue'"></bars>
+                            <bars data="ordinalSetB" position-function="'/0'" value-function="'/1'" fill="'red'"></bars>
+                            <bars data="ordinalSetC" position-function="'/0'" value-function="'/1'"
+                                  fill="'green'"></bars>
+
+                        </bar-group>
+
+                    </plot>
+                </div>
+                <div class="col-md-4">
+                    <h3>Stacked Horizontal Bars</h3>
+                </div>
+            </div>
+            <div class="row">
+                <hr>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <h3>Stacked Vertical Bars</h3>
+                </div>
+                <div class="col-md-8">
+                    <plot height="300" width="600" yaxis-label-text="'y-values'"
+                          xaxis-label-text="'x-values'" xticks="10" xmin="-100" xmax="100" ymin="-200" ymax="200"
+                          xodomain="ordinals">
+                        <bar-group type="'stacked'" arrangement="'vertical'">
+                            <bars data="ordinalSetA" position-function="'/0'" value-function="'/1'"
+                                  fill="'steelblue'"></bars>
+                            <bars data="ordinalSetB" position-function="'/0'" value-function="'/1'" fill="'red'"></bars>
+                            <bars data="ordinalSetC" position-function="'/0'" value-function="'/1'"
+                                  fill="'green'"></bars>
+                        </bar-group>
+
+                    </plot>
+                </div>
+            </div>
+
+            <div class="row">
+                <hr>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <plot height="400" width="600" yaxis-label-text="'y-values'"
+                          xaxis-label-text="'x-values'" xticks="10" xmin="-200" xmax="200" ymin="0" ymax="100"
+                          yodomain="ordinals">
+                        <bar-group type="'grouped'" arrangement="'horizontal'">
+                            <bars data="ordinalSetA" position-function="'/0'" value-function="'/1'"
+                                  fill="'steelblue'"></bars>
+                            <bars data="ordinalSetB" position-function="'/0'" value-function="'/1'" fill="'red'"></bars>
+                            <bars data="ordinalSetC" position-function="'/0'" value-function="'/1'"
+                                  fill="'green'"></bars>
+
+                        </bar-group>
+
+                    </plot>
+                </div>
+                <div class="col-md-4">
+                    <h3>Grouped Horizontal Bars</h3>
+                </div>
+            </div>
+
+            <div class="row">
+                <hr>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <h3>Grouped Vertical Bars</h3>
+                </div>
+
+                <div class="col-md-8">
+                    <plot height="300" width="600" yaxis-label-text="'y-values'"
+                          xaxis-label-text="'x-values'" ymin="-100" ymax="100" xodomain="ordinals">
+                        <bar-group type="'grouped'" arrangement="'vertical'">
+                            <bars data="ordinalSetA" position-function="'/0'" value-function="'/1'"
+                                  fill="'steelblue'"></bars>
+                            <bars data="ordinalSetB" position-function="'/0'" value-function="'/1'" fill="'red'"></bars>
+                            <bars data="ordinalSetC" position-function="'/0'" value-function="'/1'"
+                                  fill="'green'"></bars>
+                        </bar-group>
+
+                    </plot>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    angular.module("ivmlexample", ['ivml'])
+            .controller("BarCtrl", function ($scope) {
+
+                $scope.ordinalSetA = [
+                    [ 'A', -75],
+                    ['B', -80],
+                    ['C', 60],
+                    ['D', 60],
+                    ['E', 74],
+                    ['F', 92]
+                ];
+                $scope.ordinalSetB = [
+                    [ 'A', -15] ,
+                    ['B', 30],
+                    ['C', -25],
+                    ['D', 40],
+                    ['E', 35],
+                    ['F', 35]
+                ];
+
+                $scope.ordinalSetC = [
+                    ['A', 20] ,
+                    ['B', 15],
+
+                    ['E', -35],
+                    ['F', -35]
+                ];
+
+                $scope.ordinals = ['A', 'B', 'C', 'D', 'E', 'F'];
+            });
+</script>
+</body>
+</html>

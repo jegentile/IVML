@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>IVML - 2D Zooming</title>
+</head>
+<script type="text/javascript" src="../vendor/d3-3.4.3/d3.js"></script>
+<script type="text/javascript" src="../vendor/angular-1.2.14/angular.js"></script>
+<script type="text/javascript" src="../vendor/ui-bootstrap-tpls-0.11.0.min.js"></script>
+<script type="text/javascript" src="../dist/ivml.0.0.0.js"></script>
+
+<link href="../vendor/bootstrap.min.css" rel="stylesheet"/>
+
+<body>
+<div ng-app="ivmlexample">
+    <div ng-controller="planarZoomCtrl">
+	<div class="container">
+	    <div class="page-header"><h1>2D Zooming & Responsive Graph</h1></div>
+	    <div class="row">
+	        <div class="col-md-8">
+		    <plot height="300" width="600" plot-label-text="''" yaxis-label-text="'y-values'"
+			    xaxis-label-text="'x-values'" xticks="10" xmin="-100" xmax="100" yticks="10" ymin="-100" ymax="100"
+			    brush="brush2D" >
+			<points data="ordinalData" xfunction="'/0'" yfunction="'/1'" stroke="'#FF8C00'" fill="'#FFBC8D'"
+				fill-opacity="'0.5'" radius="5"></points>
+		    </plot>
+	        </div>
+		<div class="col-md-4">
+		    <h3>Static Graph</h3>
+		    <p>The static graph presents a <em>brush</em>able, or zoomable, chart that can be used to control the contents
+		    and scale of other charts.</p>
+
+		    <p>Features explored in this graph:
+
+		    <ul>
+			    <li>Enabling 2-dimensional <em>brush</em>ing</li>
+		    </ul>
+		</div>
+	    </div>
+	    <div class="row">
+	        <div class="col-md-8">
+		    <plot height="300" width="600" plot-label-text="''" yaxis-label-text="'y-values'"
+			    xaxis-label-text="'x-values'" xticks="10" xmin="xminZoomed" xmax="xmaxZoomed" yticks="10" ymin="yminZoomed" ymax="ymaxZoomed"
+			    zoomExtent="extent2D">
+			<points data="ordinalData" xfunction="'/0'" yfunction="'/1'" stroke="'#FF8C00'" fill="'#FFBC8D'"
+				fill-opacity="'0.5'" radius="5"></points>
+		    </plot>
+		</div>
+		<div class="col-md-4">
+		    <h3>Responsive Graph</h3>
+		    <p>The responsive graph automatically updates the X and Y axis and displayed data in response to <em>brush</em>ing of the static graph.</p>
+
+		    <p>Features explored in this graph:
+
+		    <ul>
+			    <li>Enabled 2-dimensional update with <em>zoomExtent</em></li>
+			    <li>Auto-updating of minimum and maximum range of the X and Y axis</li>
+		    </ul>
+		</div>
+    	    </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    angular.module("ivmlexample", ['ivml'])
+            .controller("planarZoomCtrl", function ($scope ) {
+		$scope.ordinalData = [ ];
+	
+                function randBetween(start, end) {
+                    return Math.round(Math.random() * (end - start)) + start;
+                }
+
+		for (var i = 0; i < 100; i++) {
+		    var x = randBetween(-100, 100);
+		    var y = randBetween(-100, 100);
+
+		    $scope.ordinalData.push([x, y]);
+		}
+
+		$scope.xmin = -100;
+		$scope.xmax =  100;
+		$scope.ymin = -100;
+		$scope.ymax =  100;
+
+		$scope.xminZoomed = -100;
+		$scope.xmaxZoomed =  100;
+		$scope.yminZoomed = -100;
+		$scope.ymaxZoomed =  100;
+
+                $scope.brush2D = function (brush, controller) {
+                    $scope.$apply(function ($scope) {
+                        var e = brush.extent();
+                        if (e[0][0] === e[1][0] || e[0][1] === e[1][1]) {
+                            $scope.xminZoomed = $scope.xmin;
+                            $scope.xmaxZoomed = $scope.xmax;
+                            $scope.yminZoomed = $scope.ymin;
+                            $scope.ymaxZoomed = $scope.ymax;
+                        }
+                        else {
+                            $scope.xminZoomed = e[0][0];
+                            $scope.xmaxZoomed = e[1][0];
+                            $scope.yminZoomed = e[0][1];
+                            $scope.ymaxZoomed = e[1][1];
+                        }
+                    });
+                };
+
+
+	    });
+</script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>IVML - Lines</title>
+</head>
+<script type="text/javascript" src="../vendor/d3-3.4.3/d3.js"></script>
+<script type="text/javascript" src="../vendor/angular-1.2.14/angular.js"></script>
+<script type="text/javascript" src="../vendor/ui-bootstrap-tpls-0.11.0.min.js"></script>
+<script type="text/javascript" src="../dist/ivml.0.0.0.js"></script>
+
+<link href="../vendor/bootstrap.min.css" rel="stylesheet"/>
+
+<body>
+<div ng-app="ivmlexample">
+	<div class="container">
+	    <div class="page-header"><h1>Line Charts</h1></div>
+	    <div class="row">
+	        <div ng-controller="singleLineCtrl" class="col-md-8">
+		    <plot height="300" width="600" plot-label-text="''" yaxis-label-text="'y-values'"
+			    xaxis-label-text="'x-values'" xticks="10" xmin="0" xmax="100" yticks="10" ymin="0" ymax="100">
+			<paths data="[ordinalData]" points-function="identityFunction" xfunction="'/0'" yfunction="'/1'"
+			       stroke="'#4682B4'"></paths>
+		    </plot>
+	        </div>
+		<div class="col-md-4">
+		    <h3>Single Line Chart</h3>
+		    <p>A basic chart with a single line connecting points.</p>
+
+		    <p>Features explored in this example:
+
+		    <ul>
+			    <li>Creating <em>paths</em> from a list of values</li>
+			    <li>Basic attributes of the <em>plot</em></li>
+			    <li>Built-in and user defined callback functions</li>
+		    </ul>
+		</div>
+	    </div>
+           
+	    <div class="row">
+		<div ng-controller="multiLineCtrl" class="col-md-8"> 
+		    <plot height="300" width="600" plot-label-text="''" yaxis-label-text="'y-values'"
+		    xaxis-label-text="'x-values'" xticks="10" xmin="0" xmax="100" ymin="0" ymax="100">
+			<paths data="[ordinalSetA]" points-function="identityFunction" xfunction="'/0'" yfunction="'/1'"
+			       stroke="'#4682B4'"></paths>
+			<paths data="[ordinalSetB]" points-function="identityFunction" xfunction="'/0'" yfunction="'/1'"
+			       stroke="'#BB8833'"></paths>
+		    </plot>
+	        </div>
+		<div class="col-md-4">
+		    <h3>Multi Line Chart</h3>
+		    <p>Plot multiple lines on a single chart.</p>
+
+		    <p>Features explored in this example:
+
+		    <ul>
+			    <li>Adding multiple visual elements to a <em>plot</em></li>
+		    </ul>
+		</div>
+	    </div>
+
+	    <div class="row">
+		<div ng-controller="stackLineCtrl" class="col-md-8">
+		    <plot height="300" width="600" plot-label-text="''" yaxis-label-text="'y-values'"
+		    xaxis-label-text="'x-values'" xticks="10" xmin="0" xmax="100" yticks="10" ymin="0" ymax="150">
+			<line-group>
+			    <paths data="[ordinalSetA]" points-function="identityFunction" xfunction="'/0'" yfunction="'/1'"
+				   stroke="'#4682B4'" fill="'#4682B4'"></paths>
+			    <paths data="[ordinalSetB]" points-function="identityFunction" xfunction="'/0'" yfunction="'/1'"
+				   stroke="'#BB8833'" fill="'#BB8833'"></paths>
+			</line-group>
+		    </plot>
+		</div>
+		<div class="col-md-4">
+		    <h3>Stacked Line Chart</h3>
+		    <p>Extend the multiple line chart example to create a stacked line chart.</p>
+
+		    <p>Features explored in this example:
+
+		    <ul>
+			    <li>The <em>line-group</em> visual element</li>
+		    </ul>
+		</div>
+	    </div>
+
+        </div>
+</div>
+<script type="text/javascript">
+    angular.module("ivmlexample", ['ivml'])
+            .controller("singleLineCtrl", function ($scope ) {
+		$scope.ordinalData = [
+		    [ 0,  5],
+		    [10, 40],
+		    [20, 10],
+		    [40, 80],
+		    [80, 20],
+		    [100, 35]
+		];
+
+		$scope.identityFunction = function (i) { return i;}
+	    })
+	    .controller("multiLineCtrl", function ($scope) {
+		$scope.ordinalSetA = [
+		    [ 0, 75],
+		    [10, 80],
+		    [20, 60],
+		    [40, 60],
+		    [80, 74],
+		    [100, 92]
+		];
+		$scope.ordinalSetB = [
+		    [ 0, 15],
+		    [10, 30],
+		    [20, 25],
+		    [40, 40],
+		    [80, 35],
+		    [100, 35]
+		];
+
+		$scope.identityFunction = function (i) { return i;}
+            })
+	    .controller("stackLineCtrl", function ($scope) {
+		$scope.ordinalSetA = [
+		    [ 0, 75],
+		    [10, 80],
+		    [20, 60],
+		    [40, 60],
+		    [80, 74],
+		    [100, 92]
+		];
+		$scope.ordinalSetB = [
+		    [ 0, 15],
+		    [10, 30],
+		    [20, 25],
+		    [40, 40],
+		    [80, 35],
+		    [100, 35]
+		];
+
+		$scope.identityFunction = function (i) { return i;}
+            });
+</script>
+</body>
+</html>

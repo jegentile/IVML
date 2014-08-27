@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>IVML - Quad Chart</title>
+</head>
+<script type="text/javascript" src="../vendor/d3-3.4.3/d3.js"></script>
+<script type="text/javascript" src="../vendor/angular-1.2.14/angular.js"></script>
+<script type="text/javascript" src="../vendor/ui-bootstrap-tpls-0.11.0.min.js"></script>
+<script type="text/javascript" src="../dist/ivml.0.0.0.js"></script>
+
+<link href="../vendor/bootstrap.min.css" rel="stylesheet"/>
+
+<body>
+<div ng-app="ivmlexample">
+    <div ng-controller="staticQuadCtrl">
+	<div class="container">
+	    <div class="page-header"><h1>Quad Chart</h1></div>
+	    <div class="row">
+	        <div class="col-md-8">
+		    <plot height="500" width="600" plot-label-text="''" 
+			    xmin="0" xmax="100" ymin="0" ymax="100" xgridlines-visibility="'hidden'" ygridlines-visibility="'hidden'"
+			    xaxis-visibility="'hidden'" yaxis-visibility="'hidden'">
+			<rectangles data="rectData" xcenter-function="'/0'" ycenter-function="'/1'" width="300" height="250"
+				fill="quadColor" stroke-width="'0'" fill-opacity="'0.5'"></rectangles>
+			<points data="ordinalData" xfunction="'/0'" yfunction="'/1'" stroke="'#111111'" fill="'#FFFFFF'"
+				radius="5"></points>
+			<texts data="ordinalData" xfunction="'/0'" yfunction="'/1'" text-function="labelText" font-size="14"
+				text-anchor="'start'" xadjust="10"></texts>
+		    </plot>
+	        </div>
+		<div class="col-md-4">
+		    <h3>Quad Chart</h3>
+		    <p>The Quad Chart uses a combination of <em>rectangles</em>, <em>points</em>, and <em>texts</em> visual
+		    elements to create a color coded quad chart.</p>
+
+		    <p>Features explored in this example:
+
+		    <ul>
+			    <li>Hiding gridlines with <em>xgridlines-visibility</em> and <em>ygridlines-visibility</em></li>
+			    <li>Hiding axis with <em>xaxis-visibility</em> and <em>yaxis-visibility</em></li>
+			    <li>The <em>rectangles</em> visual element</li>
+			    <li>The <em>texts</em> visual element</li>
+			    <li>Including extended attributes in source data sets</li>
+			    <li>Setting the fill color of an element using a callback function</li>
+			    <li>Setting the text of a <em>texts</em> element using a callback function</li>
+		    </ul>
+		</div>
+   	    </div>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript">
+    angular.module("ivmlexample", ['ivml', 'ui.bootstrap'])
+            .controller("staticQuadCtrl", function ($scope ) {
+		$scope.ordinalData = [
+		    [ 5,  57, "Point A"],
+		    [10, 10, "Point B"],
+		    [20, 30, "Point C"],
+		    [60, 40, "Point D"],
+		    [80, 80, "Point E"]
+		];
+
+		// the rectangle position is in graph coordinates, the size in SVG size
+		$scope.rectData = [
+		    [25, 25, "#ED412B"],
+		    [75, 25, "#E8E538"],
+		    [25, 75, "#E8E538"],
+		    [75, 75, "#38E83B"]
+		];
+
+		$scope.quadColor = function (quad) {
+		    return quad[2];
+		}
+
+		$scope.labelText = function (datum) {
+		    return datum[2];
+		}
+	    });
+</script>
+</body>
+</html>

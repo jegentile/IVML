@@ -1,0 +1,265 @@
+\clearpage \noindent \hrulefill
+\subsection*{{\tt <plot>}}
+\hrulefill\newline
+ Cartesian chart with x and y axes.
+\subsection*{\emph{ivml attributes}}
+\begin{description}
+\item[yodomain:]{array of nominal values for discrete y axes (overrides ymin, ymax, yticks)}
+\item[xaxis-tick-size:]{tick size for x axis}
+\item[xgridlines-visibility:]{visibility for x axis gridlines}
+\item[ygridlines-stroke:]{stroke color for y axis gridlines}
+\item[yaxis-truncate-ending:]{string to append to end of y axis text truncated due to exceeding yaxis-text-max-width}
+\item[ygridlines-fill:]{fill color for y axis gridlines}
+\item[margin-right:]{size in pixels of the right margin}
+\item[height:]{height in pixels of the plot area}
+\item[brush-stroke:]{stroke color for brush}
+\item[xgridlines-stroke:]{stroke color for x axis gridlines}
+\item[margin-left:]{size in pixels of the left margin}
+\item[xmin:]{minimum value of the x axis}
+\item[xaxis-label-text:]{x axis label}
+\item[ymin:]{minimum value of the y axis}
+\item[yaxis-tick-size:]{tick size for x axis}
+\item[xgridlines-shape-rendering:]{shape rendering for x axis gridlines}
+\item[xgridlines-fill:]{fill color for x axis gridlines}
+\item[brush-fill-opacity:]{fill opacity for brush}
+\item[ymax:]{maximum value of the y axis}
+\item[ytick-format-function:]{formatter for y axis tick labels}
+\item[yaxis-shape-rendering:]{shape rendering for y axis}
+\item[margin-bottom:]{size in pixels of the bottom margin}
+\item[xticks:]{number of tick marks to be shown on continuous x axis}
+\item[width:]{width in pixels of the plot area}
+\item[brush-fill:]{fill color for brush}
+\item[ygridlines-opacity:]{opacity for y axis gridlines}
+\item[brush-shape-rendering:]{shape rendering brush}
+\item[plot-label-font-color:]{font color of the main label of the plot}
+\item[yaxis-stroke:]{stroke color for y axis}
+\item[xaxis-font-color:]{font color for x axis}
+\item[yaxis-visibility:]{visibility value for y axis}
+\item[plot-background:]{background color of the plot area}
+\item[yaxis-font-size:]{font size for y axis}
+\item[xaxis-text-max-width:]{maximum width of x axis text in pixels}
+\item[xaxis-fill:]{fill color for x axis}
+\item[xaxis-visibility:]{visibility value for x axis}
+\item[ygridlines-visibility:]{visibility for y axis gridlines}
+\item[xaxis-truncate-ending:]{string to append to end of x axis text truncated due to exceeding xaxis-text-max-width}
+\item[background:]{background color of the entire element}
+\item[xtick-format-function:]{formatter for x axis tick labels}
+\item[ygridlines-shape-rendering:]{shape rendering for y axis gridlines}
+\item[xaxis-shape-rendering:]{shape rendering for x axis}
+\item[yaxis-font-color:]{font color for y axis}
+\item[brush-clear-on-redraw:]{set to true if brush should clear when plot is redrawn}
+\item[plot-label-font-size:]{font size of the main label of the plot}
+\item[yaxis-font-family:]{font family for y axis}
+\item[xodomain:]{array of nominal values for discrete x axes (overrides xmin, xmax, xticks)}
+\item[xaxis-font-size:]{font size for x axis}
+\item[yaxis-label-text:]{y axis label}
+\item[xaxis-font-family:]{font family for x axis}
+\item[yaxis-fill:]{fill color for y axis}
+\item[margin-top:]{size in pixels of the top margin}
+\item[plot-label-text:]{text for the main label of the plot}
+\item[yaxis-text-max-width:]{maximum width of y axis text in pixels}
+\item[xmax:]{maximum value of the x axis}
+\item[yticks:]{number of tick marks to be shown on continuous y axis}
+\item[xgridlines-opacity:]{opacity for x axis gridlines}
+\item[xaxis-stroke:]{stroke color for x axis}
+\end{description}
+\subsection*{\emph{event attributes}}
+\begin{description}
+\item[ybrushstart:]{function that will be called when the vertical brush starts.  Will pass the d3.svg.brush element of the plot as the first parameter.}
+\item[ybrush:]{function that will be called when the vertical brush is brushed.  Will pass the d3.svg.brush element of the plot as the first parameter.}
+\item[xbrushend:]{function that will be called when the horizontal brush ends.  Will pass the d3.svg.brush element of the plot as the first parameter.  Setting the function disables ybrushstart, ybrush, ybrushend.}
+\item[xbrushstart:]{function that will be called when the horizontal brush starts.  Will pass the d3.svg.brush element of the plot as the first parameter.  Setting the function disables ybrushstart, ybrush, ybrushend.}
+\item[xbrush:]{function that will be called when the horizontal brush is brushed.  Will pass the d3.svg.brush element of the plot as the first parameter.  Setting the function disables ybrushstart, ybrush, ybrushend.}
+\item[ybrushend:]{function that will be called when the vertical brush ends.  Will pass the d3.svg.brush element of the plot as the first parameter.}
+\item[brush:]{function that will be called when the two dimensional brush is brushed.  Will pass the d3.svg.brush element of the plot as the first parameter.  Setting the function disables xbrushstart, xbrush, xbrushend, ybrushstart, ybrush, ybrushend.}
+\item[brushend:]{function that will be called when the two dimensional brush ends.  Will pass the d3.svg.brush element of the plot as the first parameter.  Setting the function disables xbrushstart, xbrush, xbrushend, ybrushstart, ybrush, ybrushend.}
+\item[brushstart:]{function that will be called when the two dimensional brush starts.  Will pass the d3.svg.brush element of the plot as the first parameter.  Setting the function disables xbrushstart, xbrush, xbrushend, ybrushstart, ybrush, ybrushend.}
+\end{description}
+\clearpage \noindent \hrulefill
+\subsection*{{\tt <paths>}}
+\hrulefill\newline
+ Paths are visual elements that are defined by a series of points with x and y values
+\subsection*{\emph{ivml attributes}}
+\begin{description}
+\item[\uline{yfunction}:]{accessor for the y value of an element of the points array}
+\item[\uline{points-function}:]{returns an array of JavaScript objects that represent the points of the path.}
+\item[\uline{data}:]{the javascript data object to plot}
+\item[\uline{xfunction}:]{accessor for the x value of an element of the points array}
+\end{description}
+\subsection*{\emph{svg attributes}}
+\begin{description}
+\item[stroke-opacity:]{opacity of object's outline}
+\item[fill-opacity:]{fill opacity of object}
+\item[interpolate:]{interpolation mode of the object (https://github.com/mbostock/d3/wiki/SVG-Shapes\#line\_interpolate)}
+\item[stroke:]{color of object's outline}
+\item[stroke-dasharray:]{dashing of object's outline}
+\item[stroke-width:]{width of object's outline}
+\item[fill:]{color opacity of object}
+\end{description}
+\clearpage \noindent \hrulefill
+\subsection*{{\tt <bars>}}
+\hrulefill\newline
+ Vertical or horizontal bar that is part of a group. The bar's magnitude is it's length along the independent dimension (vertical for horizontal bar charts).
+\subsection*{\emph{ivml attributes}}
+\begin{description}
+\item[\uline{value-function}:]{accessor for the the bar's value (size and direction)}
+\item[\uline{position-function}:]{accessor for the bar's  position on the nominal axis}
+\item[\uline{data}:]{javascript object to plot}
+\item[stroke:]{color of the bar's outline}
+\item[fill-opacity:]{fill opacity of bar}
+\item[thickness:]{the bar's thickness (size parallel to the dependent dimension)}
+\item[stroke-opacity:]{opacity of the bar's outline}
+\item[fill:]{fill color of the bar}
+\end{description}
+\subsection*{\emph{event attributes}}
+\begin{description}
+\item[click-e:]{mouse click event}
+\item[mouse-over-e:]{mouse over event}
+\item[mouse-out-e:]{mouse out event}
+\end{description}
+\clearpage \noindent \hrulefill
+\subsection*{{\tt <cylinders>}}
+\hrulefill\newline
+ Disks defined by a radius and height.
+\subsection*{\emph{ivml attributes}}
+\begin{description}
+\item[\uline{adjustxfunction}:]{TODO}
+\item[\uline{data}:]{javascript data object}
+\item[\uline{adjustyfunction}:]{TODO}
+\item[\uline{centerxfunction}:]{center function for x position}
+\item[\uline{centeryfunction}:]{center function for y position}
+\item[width:]{width of the object}
+\item[height:]{height of the object}
+\end{description}
+\subsection*{\emph{svg attributes}}
+\begin{description}
+\item[stroke-opacity:]{stroke opacity}
+\item[fill-opacity:]{fill opacity}
+\item[stroke:]{stroke color}
+\item[stroke-dasharray:]{stroke dashing}
+\item[radius:]{radius of the cirle}
+\item[fill:]{fill color}
+\end{description}
+\subsection*{\emph{event attributes}}
+\begin{description}
+\item[click-e:]{mouse click event}
+\item[mouse-over-e:]{mouse over event}
+\item[mouse-out-e:]{mouse out event}
+\end{description}
+\clearpage \noindent \hrulefill
+\subsection*{{\tt <donut-charts>}}
+\hrulefill\newline
+ Donut charts display data as slices of a circle or arch
+\subsection*{\emph{ivml attributes}}
+\begin{description}
+\item[\uline{yfunction}:]{y position function of the object}
+\item[\uline{xfunction}:]{x position function of the object}
+\item[\uline{data}:]{javascript data object}
+\item[\uline{slice-function}:]{function that determines the size of a slice}
+\item[fill-function:]{function determining the fill of a slice}
+\end{description}
+\subsection*{\emph{svg attributes}}
+\begin{description}
+\item[stroke:]{stroke color of slices}
+\item[inner-radius:]{inner radius of slices}
+\item[outer-radius:]{outer radius of slices}
+\item[stroke-opacity:]{stroke opacity of slices}
+\item[fill-opacity:]{fill opacity of slices}
+\end{description}
+\subsection*{\emph{event attributes}}
+\begin{description}
+\item[click-e:]{mouse click event}
+\item[mouse-over-e:]{mouse over event}
+\item[mouse-out-e:]{mouse out event}
+\end{description}
+\clearpage \noindent \hrulefill
+\subsection*{{\tt <points>}}
+\hrulefill\newline
+
+\subsection*{\emph{ivml attributes}}
+\begin{description}
+\item[\uline{yfunction}:]{accessor for data's y value}
+\item[\uline{xfunction}:]{accessor for data's x value}
+\item[\uline{data}:]{the javascript data object to be plotted}
+\end{description}
+\subsection*{\emph{svg attributes}}
+\begin{description}
+\item[stroke-opacity:]{opacity of the point's outline}
+\item[fill-opacity:]{opacity of the points fill}
+\item[cursor:]{hover cursor style}
+\item[stroke:]{color of the point's outline}
+\item[radius:]{point's radius}
+\item[stroke-dasharray:]{dash array for point's outline}
+\item[fill:]{point's fill}
+\end{description}
+\subsection*{\emph{event attributes}}
+\begin{description}
+\item[click-e:]{mouse click event}
+\item[mouse-over-e:]{mouse over event}
+\item[mouse-out-e:]{mouse out event}
+\end{description}
+\clearpage \noindent \hrulefill
+\subsection*{{\tt <error-bars>}}
+\hrulefill\newline
+ Error bars are a visual element which can provide a visual representation of uncertainty around measures. In IVML, these are described by a center location and values describing the uncertainty in the positive and negative x and y directions.
+\subsection*{\emph{ivml attributes}}
+\begin{description}
+\item[\uline{xcenter-function}:]{accessor for data's function for the center x point}
+\item[\uline{data}:]{the javascript object for this plot}
+\item[\uline{ycenter-function}:]{accessor function for the center y point}
+\item[left-function:]{accessor fir data's uncertainty in the positive x direction}
+\item[up-function:]{accessor for data's uncertainty in the positive y direction}
+\item[down-function:]{accessor fir data's uncertainty in the negative y direction}
+\item[right-function:]{accessor fir data's uncertainty in the negative x direction}
+\end{description}
+\subsection*{\emph{svg attributes}}
+\begin{description}
+\item[stroke:]{line color}
+\item[stroke-width:]{line opacity}
+\item[stroke-opacity:]{line width}
+\end{description}
+\subsection*{\emph{event attributes}}
+\begin{description}
+\item[click-e:]{mouse click event}
+\item[mouse-over-e:]{mouse over event}
+\item[mouse-out-e:]{mouse out event}
+\end{description}
+\clearpage \noindent \hrulefill
+\subsection*{{\tt <line-segments>}}
+\hrulefill\newline
+ Line segments are visual elements defined with a starting and ending point.
+\subsection*{\emph{ivml attributes}}
+\begin{description}
+\item[\uline{x1-function}:]{accessor for data's x start point}
+\item[\uline{y1-function}:]{accessor for data's y start point}
+\item[\uline{data}:]{the javascript data object to be plotted}
+\item[\uline{x2-function}:]{accessor for data's x end point}
+\item[\uline{y2-function}:]{accessor for data's y end point}
+\end{description}
+\subsection*{\emph{svg attributes}}
+\begin{description}
+\item[stroke:]{color of the line}
+\item[stroke-width:]{width of the line}
+\item[stroke-dasharray:]{dashing of the line}
+\item[stroke-opacity:]{opacity of the line}
+\end{description}
+\subsection*{\emph{event attributes}}
+\begin{description}
+\item[click-e:]{mouse click event}
+\item[mouse-over-e:]{mouse over event}
+\item[mouse-out-e:]{mouse out event}
+\end{description}
+\clearpage \noindent \hrulefill
+\subsection*{{\tt <line-group>}}
+\hrulefill\newline
+ Plots a group of {\tt <paths>} elements cumulatively as a stacked area chart.
+\clearpage \noindent \hrulefill
+\subsection*{{\tt <bar-group>}}
+\hrulefill\newline
+ Group of {\tt <bars>} elements, intended for bar charts. This directive requires the data to be index by a nominal value on the axis.
+\subsection*{\emph{ivml attributes}}
+\begin{description}
+\item[padding:]{pixel spacing between bars}
+\item[type:]{specifies a {\tt grouped} or {\tt stacked} chart.}
+\item[arrangement:]{specifies a {\tt vertical} or {\tt horizontal} chart.}
+\end{description}

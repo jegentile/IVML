@@ -1,0 +1,167 @@
+\documentclass[a4paper,10pt-]{article}
+
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{listings}
+\usepackage[normalem]{ulem}
+
+\lstset{ %
+language=HTML,    % choose the language of the code
+basicstyle=\footnotesize,       % the size of the fonts that are used for the code
+numbers=left,       % where to put the line-numbers
+numberstyle=\footnotesize,      % the size of the fonts that are used for the line-numbers
+stepnumber=1,      % the step between two line-numbers. If it is 1 each line will be numbered
+numbersep=5pt,      % how far the line-numbers are from the code
+showspaces=false,   % show spaces adding particular underscores
+showstringspaces=false,         % underline spaces within strings
+showtabs=false,     % show tabs within strings adding particular underscores
+frame=single,           % adds a frame around the code
+tabsize=2,          % sets default tabsize to 2 spaces
+captionpos=b,           % sets the caption-position to bottom
+breaklines=true,        % sets automatic line breaking
+breakatwhitespace=false,    % sets if automatic breaks should only happen at whitespace
+escapeinside={\%*}{*)}          % if you want to add a comment within your code
+}
+
+
+\begin{document}
+
+\title{Getting started with \emph{ivml.js}}
+\author{J. Gentile and A. Meyers}
+
+\maketitle
+
+\section{Getting Started}
+
+IVML, the Interactive Visualization Markup Language, is a JavaScript library that leverages popular JavaScript technologies Angular, D3 and JQuery to enable developers to quickly implement interactive data visualizations in a browser.
+It has predefined a collection of embeddable Angular directives that bind to underlying
+JavaScript objects. Let's demonstrate its functionality by quickly drawing this
+graph:
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[scale=.6]{Images/HelloWorld.pdf}
+\label{scatterplot}
+\end{figure}
+
+\noindent The code for generating this plot is listed below:
+
+\lstset{language=HTML,label=ivml}
+
+\begin{lstlisting}
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<script type="text/javascript" src="./vendor/angular/angular.js"></script>
+<script type="text/javascript" src="./vendor/d3/d3.js"></script>
+<script type="text/javascript" src="./vendor/ivml/ivml.0.5.0.js"></script>
+
+<body ng-app="app">
+    <div ng-controller="controller">
+        <div>
+            <plot height="250" width="600" plot-label-text="'Hello Charting'" yaxis-label-text="'Y Axis'" xaxis-label-text="'X Axis'" xmin="0" xmax="xmax" yticks="5" ymin="0" ymax="ymax">
+                <points data="data" yfunction="y" xfunction="x" fill='cfunc' radius="5" fill-opacity="0.5"
+                        stroke="'black'">
+                </points>
+            </plot>
+        </div>
+    </div>
+</body>
+<script>
+angular.module('app',['ivml'])
+        .controller('controller',function($scope){
+            $scope.data = [[5,3], [10,17], [15,4], [2,8]];
+            $scope.xmax = d3.max($scope.data, function(d) { return d[0]; });
+            console.log($scope.data)
+            console.log($scope.xmax)
+            $scope.ymax = d3.max($scope.data, function(d) { return d[1]; });
+            $scope.x = function(d){
+                return d[0];
+            }
+            $scope.y = function(d){
+                return d[1];
+            }
+            $scope.cfunc = function(d,i){
+                var c = ['red', 'blue', 'orange', 'purple' ]
+                return c[i]
+            }
+        })
+</script>
+</html>
+\end{lstlisting}
+
+\noindent There are at least three things you will probably notice. First,  a couple of HTML tags look unfamiliar on lines 11 and 12 ({\tt <plot>}, {\tt <points>}), these directives are provided by IVML. Additionally, there is some \emph{angular.js} boilerplate code (lines 20, 21, and the {\tt \$scope} variable). Finally, various properties are defined on the {\tt \$scope} object. The next sections provide detail on graphing by directives and data management in \emph{angular.js}.
+
+\subsection{Graphing by IVML Directive}
+
+IVML provides a set of Angular directives to make graphing very easy. There are three types of these, charts, visual elements, and groups. Charts are high-level directives describing the canvas that visual elements are plotted on. Visual elements are graphics that represent data. In the provided example, the {\tt plot} directive describes the axes while {\tt points} represent the data for plotting. Groups are collections of visual elements that are necessary for generating some plots.
+
+This approach allows us to embed an arbitrary number of visual elements inside a chart so it's easy to have points, line segments, error bars, and rectangles on the same plot. Each visual element can bind to data so expressive and custom graphs can be quickly generated with sets of simple visual elements.
+
+Directives are configured by their attributes. In {\tt plot}, the attributes configure the plotting canvas and axes. Four of the attributes are constant values (attributes surrounded by {\tt ' '}), while the value of {\tt xmaximum} and {\tt ymaximum} corresponds to variables in the JavaScript. 
+
+Some plots require visual elements to be part of a group. For example, collections of data in a bar graph should be centered around values on a nominal axis. IVML provides group directives for this purpose. Consider this code snippet from an HTML body:
+
+\lstset{language=HTML,label=ivml}
+
+\begin{lstlisting}
+<plot xaxis-label-text="'Rects_x'" yaxis-label-text="' Rects y'"  xordinal-domain="odomain" yminimum="'-2'" ymaximum="2"  height="'200'" width="'200'">
+      <bar-group padding="'2'" type="type">
+          <bar data="data1" value-function="'/m'" position-function="'/o'" fill="'blue'" width="'4'"></bar>
+          <bar data="data2" value-function="'/m'" position-function="'/o'" fill="'blue'" width="'4'"></bar>
+          <bar data="data3" value-function="'/m'" position-function="'/o'" fill="'blue'" width="'4'"></bar>
+      </bar-group>
+</plot>
+
+\end{lstlisting}
+
+\noindent Notice there are multiple {\tt <bar>} tags in a {\tt <bar-group>}. Each {\tt <bar>} is associated with a unique data set but the position of each visual element will depend on other element positions so they must be grouped. 
+
+\subsection{Designing with \emph{angular.js}}
+
+IVML leverages \emph{angular.js} to define its controllers and directives because interactive data visualization are web applications. \emph{angular.js} is a `model-view-whatever' framework that allows you to develop very powerful web applications. We will cover just enough \emph{angular.js} to give us an understanding of what is going on in our example code but we recommend looking into \emph{angular.js} to learn all it can do. 
+
+Notice on lines {\tt 8} and {\tt 9} there are {\tt ng-*} attributes in the {\tt div}s. These are defining the context of the embedded code for \emph{angular.js}. Our application is called {\tt app}; our controller is {\tt controller}; and we define those in lines {\tt 20} and {\tt 21}. Note that the controller is defined with a function that takes a {\tt \$scope} variable. 
+
+Variables referenced in the {\tt ng-controller} HTML context are in the ``scope" so {\tt xmaximum="xmax"} means the {\tt xmaximum} attribute for the chart will be equal to {\tt \$scope.xmax}. The controller script defines the values referenced by IVML directives and when the referenced values change, the charts will automatically update. We define {\tt \$scope.data} and set it as the data attribute in {\tt points} so every time {\tt \$scope.data} is changed, the {\tt points} will update to reflect the new data values.
+
+\subsection{Role of Callback Functions}
+
+Notice that there are three functions described in the controller as members of the {\tt \$scope} object, {\tt x(d)}, {\tt y(d)}, and {\tt cfunc(d,i)}. These functions are given as the {\tt xfunction}, {\tt yfunction}, and {\tt fill} of {\tt points}. Points are drawn by adding {\tt circle} elements to the DOM and each element is given a set of attributes defined in the directive. When attribute values are given as callback functions, IVML passes the data object along with its index or key to the function and the returned value should be appropriate for the attribute (i.e. colors or numbers when necessary). 
+
+The data being plotted is an array of arrays ({\tt \$scope.data}) so each element in the higher-level array represents each point. The accessor for the x position returns the first element of a data object, and the y position returns the second element. The fill of a point is dependent on its data's position in the list. Any visual element attribute can be passed in as a callback function except for {\tt data}. This should be familiar to users who know \emph{d3.js} (in fact, IVML uses \emph{d3.js} to bind data to DOM elements).
+
+IVML has a construct to simplify callback functions that just return the value at an index or key. In the first example, {\tt \$scope.x(d)} and {\tt \$scope.y(d)} just returned the value at index {\tt 0} and {\tt 1}. This can be simplified an attribute a string with '/' as the leading character followed by the index or key. Therefore, on line 12, {\tt yfunction="y"} can be replaced with {\tt yfunction="'/1'"} and  the declaration of {\tt \$scope.y} can be removed. 
+
+\subsubsection{Event Callbacks} 
+
+IVML supports several events for when the user may mouse-over, mouse-out or click on a visual object. Callback functions for these events be set as an attribute. IVML will call event functions with three parameters: the data, index and DOM element (abbreviated as {\tt d,i,e}). Element properties can be changed by JavaScript methods (inkling d3 and jQuery functions). The examples directory provides samples of these events in action. 
+
+
+
+
+\section{Documentation}
+
+This section will describe the attributes and directives provided by IVML in detail. Recall that there are three types of directives, charts, visual elements, and groups. Visual objects need to be in a chart and groups are collections of visual objects. 
+
+\subsection{\emph{ivml}, \emph{svg}, and \emph{event} Attributes}
+
+
+Visual elements have three types of attributes: \emph{ivml}, \emph{svg}, and \emph{event}. In general, the data attribute in \emph{ivml} will point to a JavaScript object and the accessors will be javascript functions. \emph{svg} attributes can be constant values (surrounded by {\tt ''} or callback functions. \emph{event} attributes must be callback functions and the parameters are the data, index and DOM element. 
+
+\begin{description}
+\item[\emph{ivml attributes}]{are required by the toolkit and generally relate to the data and accessor routines required for rendering data in the correct position on a chart. }
+
+\item[\emph{svg} attributes]{directly map to the svg attributes of visual elements so any formats or units recognized by the browser can be utilized.}
+
+\item[\emph{event} attributes]{are functions that are called when a specified event occurs on a data object. The callback function's parameters are the data, key and DOM element .}
+
+\end{description}
+
+\subsection{How to Read the Directive Pages}
+
+Each IVML directive is documented on the following pages. We provide a brief description, define the directive's type and list its attributes. \uline{An underlined attribute means it's required by the directive.} Examples for each directive's usage can be found in the accompanying files.
+
+\include{manual}
+
+\end{document}

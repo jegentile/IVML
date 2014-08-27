@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>IVML - Hurricane Chart</title>
+</head>
+<script type="text/javascript" src="../vendor/d3-3.4.3/d3.js"></script>
+<script type="text/javascript" src="../vendor/angular-1.2.14/angular.js"></script>
+<script type="text/javascript" src="../vendor/ui-bootstrap-tpls-0.11.0.min.js"></script>
+<script type="text/javascript" src="../dist/ivml.0.0.0.js"></script>
+
+<link href="../vendor/bootstrap.min.css" rel="stylesheet"/>
+
+<body>
+<div ng-app="ivmlexample">
+    <div ng-controller="staticQuadCtrl">
+	<div class="container">
+	    <div class="page-header"><h1>Stepped Hurricane Chart</h1></div>
+	    <div class="row">
+	        <div class="col-md-8">
+		    <plot height="500" width="600" plot-label-text="''" 
+		    xmin="0" xmax="50" ymin="0" ymax="100" xgridlines-visibility="'hidden'" ygridlines-visibility="'hidden'">
+			<error-bars data="ordinalData" xcenter-function="'/0'" ycenter-function="'/1'" up-function="thirdOrderError" down-function="thirdOrderError"
+				stroke="'#ED412B'" stroke-width="'60'"></error-bars>
+			<error-bars data="ordinalData" xcenter-function="'/0'" ycenter-function="'/1'" up-function="secondOrderError" down-function="secondOrderError"
+				stroke="'#E8E538'" stroke-width="'60'"></error-bars>
+			<error-bars data="ordinalData" xcenter-function="'/0'" ycenter-function="'/1'" up-function="firstOrderError" down-function="firstOrderError"
+				stroke="'#38E83B'" stroke-width="'60'"></error-bars>
+			<points data="ordinalData" xfunction="'/0'" yfunction="'/1'" stroke="'#111111'" fill="'#FFFFFF'"
+				radius="5"></points>
+		    </plot>
+	        </div>
+		<div class="col-md-4">
+		    <h3>Stepped Hurricane Chart</h3>
+		    <p>This stepped hurricane chart uses a series of three <em>error-bars</em> and a set of <em>points</em> to
+		    create a time series.</p>
+
+		    <p>Features explored in this example:
+
+		    <ul>
+			    <li>Hiding gridlines with <em>xgridlines-visibility</em> and <em>ygridlines-visibility</em>
+			    <li>The <em>error-bars</em> visual element</li>
+			    <li>Including extended attributes in an ordinal data set</li>
+		    </ul>
+		</div>
+	    </div>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript">
+    angular.module("ivmlexample", ['ivml', 'ui.bootstrap'])
+            .controller("staticQuadCtrl", function ($scope ) {
+		$scope.ordinalData = [
+		    [ 5, 20, 3, 5, 7],
+		    [10, 25, 3, 5, 9],
+		    [15, 27, 5, 8, 15],
+		    [20, 30, 7, 11, 20],
+		    [25, 32, 8, 13, 24],
+		    [30, 40, 11, 17, 32],
+		    [35, 50, 13, 21, 38],
+		    [40, 45, 16, 28, 48],
+		    [45, 37, 18, 30, 55],
+		    [50, 32, 17, 37, 67],
+		];
+
+		$scope.firstOrderError = function (point) {
+		    return point[2];
+		}
+
+		$scope.secondOrderError = function (point) {
+		    return point[3];
+		}
+
+		$scope.thirdOrderError = function (point) {
+		    return point[4];
+		}
+
+	    });
+</script>
+</body>
+</html>
