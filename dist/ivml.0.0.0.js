@@ -724,6 +724,9 @@ ivml.visualElements.Bars = function Bars(chartController, barController, $timeou
                     return Math.abs(ys(0) - ys(values_function(d, i)) - 1)
                 })
                 .attr('fill-opacity', Bars.attributes.fillOpacity)
+                .attr('stroke-width', Bars.attributes.strokeWidth)
+                .attr('stroke-opacity', Bars.attributes.strokeOpacity)
+
                 .attr('width', Bars.attributes.thickness)
                 .attr('fill', Bars.attributes.fill)
             rects.exit().remove()
@@ -771,6 +774,9 @@ ivml.visualElements.Bars = function Bars(chartController, barController, $timeou
 
                 })
                 .attr('fill-opacity', Bars.attributes.fillOpacity)
+                .attr('stroke-width', Bars.attributes.strokeWidth)
+                .attr('stroke-opacity', Bars.attributes.strokeOpacity)
+
 
                 .attr('width', Bars.attributes.thickness)
                 .attr('fill', Bars.attributes.fill)
@@ -810,6 +816,8 @@ ivml.visualElements.Bars = function Bars(chartController, barController, $timeou
                     return Math.abs(xs(0) - xs(values_function(d, i)) - 1)
                 })
                 .attr('fill-opacity', Bars.attributes.fillOpacity)
+                .attr('stroke-width', Bars.attributes.strokeWidth)
+                .attr('stroke-opacity', Bars.attributes.strokeOpacity)
 
                 .attr('height', Bars.attributes.thickness)
                 .attr('fill', Bars.attributes.fill)
@@ -862,6 +870,9 @@ ivml.visualElements.Bars = function Bars(chartController, barController, $timeou
 
                 })
                 .attr('fill-opacity', Bars.attributes.fillOpacity)
+                .attr('stroke-width', Bars.attributes.strokeWidth)
+                .attr('stroke-opacity', Bars.attributes.strokeOpacity)
+
                 .attr('height', Bars.attributes.thickness)
                 .attr('fill', Bars.attributes.fill);
 
