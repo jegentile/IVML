@@ -18,7 +18,7 @@
     <div ng-controller="BarCtrl">
         <div class="container">
             <div class="page-header"><h1>IVML Bar-Group and Bar Examples </h1></div>
-
+             <h1>{{mouse_over_data}}</h1>
             <div class="row">
                 <div class="col-md-8">
                     <plot height="300" width="600"
@@ -30,7 +30,7 @@
                                   fill="'steelblue'"></bars>
                             <bars data="ordinalSetB" position-function="'/0'" value-function="'/1'" fill="'red'"></bars>
                             <bars data="ordinalSetC" position-function="'/0'" value-function="'/1'"
-                                  fill="'green'"></bars>
+                                  fill="'green'" mouse-over-e="mouseover" fill-opacity="0.5"></bars>
 
                         </bar-group>
 
@@ -148,6 +148,13 @@
                 ];
 
                 $scope.ordinals = ['A', 'B', 'C', 'D', 'E', 'F'];
+
+                $scope.mouseover = function(d,i,e){
+                    console.log('mouse over')
+                    $scope.mouse_over_data = e;
+                    $scope.$apply()
+
+                }
             });
 </script>
 </body>

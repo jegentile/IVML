@@ -31,10 +31,9 @@ ivml.visualElements.Bars = function Bars(chartController, barController, $timeou
 
         },
         events: {
-
             mouseOverE: null, //@e mouse over event
             mouseOutE: null, //@e mouse out event
-            clickE: null   //@e mouse click event
+            clickE: null    //@e mouse click event
         }
 
     }
@@ -113,6 +112,7 @@ ivml.visualElements.Bars = function Bars(chartController, barController, $timeou
                 .attr('height', function (d, i) {
                     return Math.abs(ys(0) - ys(values_function(d, i)) - 1)
                 })
+                .attr('fill-opacity', Bars.attributes.fillOpacity)
                 .attr('width', Bars.attributes.thickness)
                 .attr('fill', Bars.attributes.fill)
             rects.exit().remove()
@@ -159,6 +159,8 @@ ivml.visualElements.Bars = function Bars(chartController, barController, $timeou
 
 
                 })
+                .attr('fill-opacity', Bars.attributes.fillOpacity)
+
                 .attr('width', Bars.attributes.thickness)
                 .attr('fill', Bars.attributes.fill)
 
@@ -196,6 +198,8 @@ ivml.visualElements.Bars = function Bars(chartController, barController, $timeou
                 .attr('width', function (d, i) {
                     return Math.abs(xs(0) - xs(values_function(d, i)) - 1)
                 })
+                .attr('fill-opacity', Bars.attributes.fillOpacity)
+
                 .attr('height', Bars.attributes.thickness)
                 .attr('fill', Bars.attributes.fill)
             rects.exit().remove()
@@ -246,15 +250,12 @@ ivml.visualElements.Bars = function Bars(chartController, barController, $timeou
 
 
                 })
+                .attr('fill-opacity', Bars.attributes.fillOpacity)
                 .attr('height', Bars.attributes.thickness)
                 .attr('fill', Bars.attributes.fill);
 
             rects.exit().remove()
         }
-
-        if (!Bars.accessors.top) return;
-        var xs = Bars.elements.xscale;
-        var ys = Bars.elements.yscale;
 
 
         if (Bars.events.mouseOutE) {
@@ -272,6 +273,8 @@ ivml.visualElements.Bars = function Bars(chartController, barController, $timeou
                 Bars.events.clickE(d, i, d3.select(this));
             })
         }
+
+
 
     };
 

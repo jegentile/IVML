@@ -642,10 +642,9 @@ ivml.visualElements.Bars = function Bars(chartController, barController, $timeou
 
         },
         events: {
-
             mouseOverE: null, //@e mouse over event
             mouseOutE: null, //@e mouse out event
-            clickE: null   //@e mouse click event
+            clickE: null    //@e mouse click event
         }
 
     }
@@ -724,6 +723,7 @@ ivml.visualElements.Bars = function Bars(chartController, barController, $timeou
                 .attr('height', function (d, i) {
                     return Math.abs(ys(0) - ys(values_function(d, i)) - 1)
                 })
+                .attr('fill-opacity', Bars.attributes.fillOpacity)
                 .attr('width', Bars.attributes.thickness)
                 .attr('fill', Bars.attributes.fill)
             rects.exit().remove()
@@ -770,6 +770,8 @@ ivml.visualElements.Bars = function Bars(chartController, barController, $timeou
 
 
                 })
+                .attr('fill-opacity', Bars.attributes.fillOpacity)
+
                 .attr('width', Bars.attributes.thickness)
                 .attr('fill', Bars.attributes.fill)
 
@@ -807,6 +809,8 @@ ivml.visualElements.Bars = function Bars(chartController, barController, $timeou
                 .attr('width', function (d, i) {
                     return Math.abs(xs(0) - xs(values_function(d, i)) - 1)
                 })
+                .attr('fill-opacity', Bars.attributes.fillOpacity)
+
                 .attr('height', Bars.attributes.thickness)
                 .attr('fill', Bars.attributes.fill)
             rects.exit().remove()
@@ -857,15 +861,12 @@ ivml.visualElements.Bars = function Bars(chartController, barController, $timeou
 
 
                 })
+                .attr('fill-opacity', Bars.attributes.fillOpacity)
                 .attr('height', Bars.attributes.thickness)
                 .attr('fill', Bars.attributes.fill);
 
             rects.exit().remove()
         }
-
-        if (!Bars.accessors.top) return;
-        var xs = Bars.elements.xscale;
-        var ys = Bars.elements.yscale;
 
 
         if (Bars.events.mouseOutE) {
@@ -883,6 +884,8 @@ ivml.visualElements.Bars = function Bars(chartController, barController, $timeou
                 Bars.events.clickE(d, i, d3.select(this));
             })
         }
+
+
 
     };
 
@@ -2800,7 +2803,7 @@ ivml.visualElements.Plot = function (element, controller, $timeout) {
 
         Plot.elements.xAxisText
             .attr('transform', 'translate(' + Plot.attributes.width + ', ' + (Plot.attributes.height + Plot.attributes.marginBottom - 10) + ')')
-            .text(escape(Plot.attributes.xaxisLabelText))
+            .text(cleanEscape(Plot.attributes.xaxisLabelText))
             .style('font-family', Plot.attributes.xaxisFontFamily)
             .style('font-size', Plot.attributes.xaxisFontSize)
             .style('fill', Plot.attributes.xaxisFontColor);
@@ -2833,7 +2836,7 @@ ivml.visualElements.Plot = function (element, controller, $timeout) {
             .attr('transform', 'translate(0,' + (12 - Plot.attributes.marginTop) + ')')
             .style('font-size', Plot.attributes.plotLabelFontSize)
             .style('fill', Plot.attributes.plotLabelFontColor)
-            .text(escape(Plot.attributes.plotLabelText));
+            .text(cleanEscape(Plot.attributes.plotLabelText));
 
         var lastExtent = (Plot.elements.brush && !Plot.elements.brush.empty()) ? Plot.elements.brush.extent() : null;
         var setXBrushHeight = false;
