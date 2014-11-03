@@ -21,6 +21,7 @@ ivml.visualElements.Bars = function Bars(chartController, barController, $timeou
             fill: "black", //@i fill color of the bar
             fillOpacity: 1.0, //@i fill opacity of bar
             stroke: null, //@i color of the bar's outline
+            strokeWidth: 1.0, //@i stroke width of the bar's line
             strokeOpacity: 1.0,  //@i opacity of the bar's outline
             thickness: 5 //@i the bar's thickness (size parallel to the dependent dimension)
         },
@@ -115,6 +116,8 @@ ivml.visualElements.Bars = function Bars(chartController, barController, $timeou
                 .attr('fill-opacity', Bars.attributes.fillOpacity)
                 .attr('stroke-width', Bars.attributes.strokeWidth)
                 .attr('stroke-opacity', Bars.attributes.strokeOpacity)
+                .attr('stroke', Bars.attributes.stroke)
+
 
                 .attr('width', Bars.attributes.thickness)
                 .attr('fill', Bars.attributes.fill)
@@ -165,6 +168,8 @@ ivml.visualElements.Bars = function Bars(chartController, barController, $timeou
                 .attr('fill-opacity', Bars.attributes.fillOpacity)
                 .attr('stroke-width', Bars.attributes.strokeWidth)
                 .attr('stroke-opacity', Bars.attributes.strokeOpacity)
+                .attr('stroke', Bars.attributes.stroke)
+
 
 
                 .attr('width', Bars.attributes.thickness)
@@ -207,6 +212,8 @@ ivml.visualElements.Bars = function Bars(chartController, barController, $timeou
                 .attr('fill-opacity', Bars.attributes.fillOpacity)
                 .attr('stroke-width', Bars.attributes.strokeWidth)
                 .attr('stroke-opacity', Bars.attributes.strokeOpacity)
+                .attr('stroke', Bars.attributes.stroke)
+
 
                 .attr('height', Bars.attributes.thickness)
                 .attr('fill', Bars.attributes.fill)
@@ -261,7 +268,7 @@ ivml.visualElements.Bars = function Bars(chartController, barController, $timeou
                 .attr('fill-opacity', Bars.attributes.fillOpacity)
                 .attr('stroke-width', Bars.attributes.strokeWidth)
                 .attr('stroke-opacity', Bars.attributes.strokeOpacity)
-
+                .attr('stroke', Bars.attributes.stroke)
                 .attr('height', Bars.attributes.thickness)
                 .attr('fill', Bars.attributes.fill);
 
